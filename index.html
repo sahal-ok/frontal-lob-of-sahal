@@ -1,38 +1,624 @@
-### `index.html`
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Optimization — The Next Revolution</title>
+  <title>The Next Revolution Is Optimization</title>
 
   <meta
     name="description"
     content="A thought experiment about optimization, democratization, AI, agents and the next bottleneck."
-  />
+  >
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #fafafa;
+      --text: #111;
+      --muted: #777;
+      --line: #e5e5e5;
+      --accent: #b8d900;
+
+      --content-width: 720px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      line-height: 1.7;
+    }
+
+
+    /* =========================
+       READING PROGRESS
+    ========================== */
+
+    .progress {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 0;
+      height: 2px;
+
+      background: var(--text);
+
+      z-index: 1000;
+    }
+
+
+    /* =========================
+       NAVIGATION
+    ========================== */
+
+    .nav {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+      right: 0;
+
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 28px 40px;
+
+      font-size: 12px;
+    }
+
+    .logo {
+      color: var(--text);
+
+      text-decoration: none;
+
+      font-weight: 700;
+
+      font-size: 18px;
+    }
+
+    .nav-label {
+      color: var(--muted);
+
+      letter-spacing: 0.08em;
+    }
+
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero {
+      min-height: 100vh;
+
+      max-width: 1100px;
+
+      margin: auto;
+
+      padding:
+        180px 40px
+        100px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.15em;
+
+      margin-bottom: 35px;
+    }
+
+    .hero h1 {
+      font-size: clamp(
+        64px,
+        11vw,
+        150px
+      );
+
+      line-height: 0.9;
+
+      letter-spacing: -0.07em;
+
+      font-weight: 700;
+    }
+
+    .hero h1 em {
+      color: var(--muted);
+
+      font-style: normal;
+    }
+
+    .hero-description {
+      max-width: 500px;
+
+      margin-top: 45px;
+
+      color: var(--muted);
+
+      font-size: 18px;
+
+      line-height: 1.6;
+    }
+
+    .scroll {
+      margin-top: 100px;
+
+      color: var(--muted);
+
+      font-size: 20px;
+
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(7px);
+      }
+    }
+
+
+    /* =========================
+       ARTICLE
+    ========================== */
+
+    main {
+      max-width: var(--content-width);
+
+      margin: auto;
+
+      padding:
+        0 25px
+        100px;
+    }
+
+    article {
+      margin-bottom: 180px;
+
+      opacity: 0;
+
+      transform: translateY(20px);
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    article.visible {
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+
+    .section-label {
+      color: var(--muted);
+
+      font-size: 11px;
+
+      letter-spacing: 0.15em;
+
+      margin-bottom: 25px;
+
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(
+        38px,
+        6vw,
+        64px
+      );
+
+      line-height: 1.05;
+
+      letter-spacing: -0.055em;
+
+      margin-bottom: 40px;
+    }
+
+    p {
+      color: #444;
+
+      font-size: 18px;
+
+      margin-bottom: 25px;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+
+    /* =========================
+       QUOTES
+    ========================== */
+
+    blockquote {
+      margin: 55px 0;
+
+      padding-left: 25px;
+
+      border-left: 2px solid var(--text);
+
+      font-size: 28px;
+
+      line-height: 1.3;
+
+      letter-spacing: -0.03em;
+
+      color: var(--text);
+    }
+
+
+    /* =========================
+       REVOLUTION TIMELINE
+    ========================== */
+
+    .timeline {
+      border-top:
+        1px solid var(--line);
+
+      margin:
+        60px 0
+        50px;
+    }
+
+    .timeline div {
+      display: grid;
+
+      grid-template-columns:
+        45px
+        1fr
+        120px;
+
+      align-items: center;
+
+      padding: 18px 0;
+
+      border-bottom:
+        1px solid var(--line);
+    }
+
+    .timeline span {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .timeline strong {
+      font-size: 18px;
+    }
+
+    .timeline small {
+      color: var(--muted);
+
+      font-size: 13px;
+
+      text-align: right;
+    }
+
+
+    /* =========================
+       SIMPLE LIST
+    ========================== */
+
+    .simple-list {
+      margin: 50px 0;
+    }
+
+    .simple-list p {
+      font-size: 30px;
+
+      color: var(--text);
+
+      margin-bottom: 4px;
+
+      letter-spacing: -0.03em;
+    }
+
+
+    /* =========================
+       QUESTIONS
+    ========================== */
+
+    .questions {
+      margin-top: 50px;
+    }
+
+    .questions p {
+      padding: 20px 0;
+
+      margin: 0;
+
+      border-bottom:
+        1px solid var(--line);
+
+      color: var(--text);
+    }
+
+
+    /* =========================
+       EQUATION
+    ========================== */
+
+    .equation {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin: 60px 0;
+
+      padding: 25px 0;
+
+      border-top:
+        1px solid var(--line);
+
+      border-bottom:
+        1px solid var(--line);
+
+      overflow-x: auto;
+    }
+
+    .equation span {
+      white-space: nowrap;
+
+      font-size: 16px;
+    }
+
+    .equation b {
+      color: var(--muted);
+
+      font-weight: normal;
+    }
+
+
+    /* =========================
+       FRAMEWORK
+    ========================== */
+
+    .framework {
+      list-style: none;
+
+      margin-top: 60px;
+    }
+
+    .framework li {
+      display: grid;
+
+      grid-template-columns:
+        50px
+        1fr;
+
+      gap: 10px;
+
+      padding: 25px 0;
+
+      border-bottom:
+        1px solid var(--line);
+
+      font-size: 20px;
+
+      line-height: 1.4;
+    }
+
+    .framework span {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      padding-top: 5px;
+    }
+
+
+    /* =========================
+       FINAL SECTION
+    ========================== */
+
+    .final-points {
+      margin: 60px 0;
+    }
+
+    .final-points div {
+      display: grid;
+
+      grid-template-columns:
+        50px
+        1fr;
+
+      gap: 10px;
+
+      padding: 25px 0;
+
+      border-bottom:
+        1px solid var(--line);
+    }
+
+    .final-points span {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .final-points p {
+      margin: 0;
+
+      color: var(--text);
+
+      font-size: 21px;
+    }
+
+    .last-line {
+      margin-top: 120px;
+
+      font-size:
+        clamp(
+          42px,
+          7vw,
+          75px
+        );
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      border-top:
+        1px solid var(--line);
+
+      padding:
+        30px 40px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      letter-spacing: 0.08em;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      .nav {
+        padding: 22px;
+      }
+
+      .hero {
+        padding:
+          150px 22px
+          70px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      main {
+        padding:
+          0 22px
+          70px;
+      }
+
+      article {
+        margin-bottom: 120px;
+      }
+
+      p {
+        font-size: 17px;
+      }
+
+      blockquote {
+        font-size: 24px;
+
+        margin:
+          40px 0;
+      }
+
+      .timeline div {
+        grid-template-columns:
+          35px
+          1fr
+          80px;
+      }
+
+      .timeline strong {
+        font-size: 16px;
+      }
+
+      .timeline small {
+        font-size: 11px;
+      }
+
+      .equation {
+        justify-content: flex-start;
+      }
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-  <!-- Reading progress -->
-  <div class="progress"></div>
 
-  <!-- Navigation -->
+  <!-- =========================
+       READING PROGRESS
+  ========================== -->
+
+  <div
+    class="progress"
+    id="progress"
+  ></div>
+
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
   <header class="nav">
-    <a href="#" class="logo">S.</a>
+
+    <a
+      href="#"
+      class="logo"
+    >
+      S.
+    </a>
 
     <span class="nav-label">
-      Essay / 2026
+      ESSAY / 2026
     </span>
+
   </header>
 
 
-  <!-- Hero -->
+  <!-- =========================
+       HERO
+  ========================== -->
+
   <section class="hero">
 
     <p class="eyebrow">
@@ -40,14 +626,21 @@
     </p>
 
     <h1>
-      The next<br />
-      revolution is<br />
+
+      The next<br>
+
+      revolution is<br>
+
       <em>optimization.</em>
+
     </h1>
 
     <p class="hero-description">
-      What if every major economic revolution is simply
-      humanity making another capability cheaper?
+
+      What if every major economic revolution
+      is simply humanity making another
+      capability cheaper?
+
     </p>
 
     <div class="scroll">
@@ -57,27 +650,35 @@
   </section>
 
 
+  <!-- =========================
+       ARTICLE
+  ========================== -->
+
   <main>
 
-    <!-- INTRO -->
+
+    <!-- 01 -->
 
     <article>
 
-      <p class="section-label">01</p>
+      <p class="section-label">
+        01
+      </p>
 
       <h2>
         Predicting the future is hard.
       </h2>
 
       <p>
-        If anyone could consistently predict the future,
-        they would probably become a trillionaire.
+        If anyone could consistently predict
+        the future, they would probably become
+        a trillionaire.
       </p>
 
       <p>
-        Even the best investors and technology companies
-        make decisions that look completely different
-        in hindsight.
+        Even the best investors and technology
+        companies make decisions that look
+        completely different in hindsight.
       </p>
 
       <p>
@@ -93,17 +694,20 @@
       </p>
 
       <blockquote>
-        What is humanity continuously trying to optimize?
+        What is humanity continuously
+        trying to optimize?
       </blockquote>
 
     </article>
 
 
-    <!-- REVOLUTIONS -->
+    <!-- 02 -->
 
     <article>
 
-      <p class="section-label">02</p>
+      <p class="section-label">
+        02
+      </p>
 
       <h2>
         One pattern keeps appearing.
@@ -144,18 +748,21 @@
       </div>
 
       <p>
-        Each revolution seems to make a previously expensive
-        capability dramatically cheaper and more accessible.
+        Each revolution seems to make a
+        previously expensive capability
+        dramatically cheaper and more accessible.
       </p>
 
     </article>
 
 
-    <!-- AGRICULTURE -->
+    <!-- 03 -->
 
     <article>
 
-      <p class="section-label">03 — AGRICULTURE</p>
+      <p class="section-label">
+        03 — AGRICULTURE
+      </p>
 
       <h2>
         We optimized food.
@@ -163,8 +770,8 @@
 
       <p>
         Humans learned to produce food systematically.
-        Better crops, seeds, irrigation, fertilizers and
-        farming techniques increased output.
+        Better crops, seeds, irrigation, fertilizers
+        and farming techniques increased output.
       </p>
 
       <p>
@@ -182,18 +789,21 @@
     </article>
 
 
-    <!-- INDUSTRY -->
+    <!-- 04 -->
 
     <article>
 
-      <p class="section-label">04 — INDUSTRY</p>
+      <p class="section-label">
+        04 — INDUSTRY
+      </p>
 
       <h2>
         We optimized muscle.
       </h2>
 
       <p>
-        Machines multiplied what one human could physically accomplish.
+        Machines multiplied what one human
+        could physically accomplish.
       </p>
 
       <p>
@@ -202,7 +812,8 @@
       </p>
 
       <p>
-        Physical production became cheaper and more scalable.
+        Physical production became cheaper
+        and more scalable.
       </p>
 
       <blockquote>
@@ -212,24 +823,26 @@
     </article>
 
 
-    <!-- INTERNET -->
+    <!-- 05 -->
 
     <article>
 
-      <p class="section-label">05 — INTERNET</p>
+      <p class="section-label">
+        05 — INTERNET
+      </p>
 
       <h2>
         We optimized access to knowledge.
       </h2>
 
       <p>
-        The Internet made information accessible to almost anyone
-        with a connection.
+        The Internet made information accessible
+        to almost anyone with a connection.
       </p>
 
       <p>
-        Books, research, documentation, lectures and experts
-        became available from almost anywhere.
+        Books, research, documentation, lectures
+        and experts became available from almost anywhere.
       </p>
 
       <p>
@@ -237,17 +850,20 @@
       </p>
 
       <blockquote>
-        But access to knowledge isn't the same as knowing what to do with it.
+        But access to knowledge isn't the same
+        as knowing what to do with it.
       </blockquote>
 
     </article>
 
 
-    <!-- AI -->
+    <!-- 06 -->
 
     <article>
 
-      <p class="section-label">06 — AI</p>
+      <p class="section-label">
+        06 — AI
+      </p>
 
       <h2>
         We are optimizing intelligence.
@@ -255,17 +871,18 @@
 
       <p>
         AI can increasingly reason over information,
-        write code, analyze data, generate ideas and
-        perform cognitive tasks.
+        write code, analyze data, generate ideas
+        and perform cognitive tasks.
       </p>
 
       <p>
-        The important change may not simply be that
-        AI is becoming smarter.
+        The important change may not simply be
+        that AI is becoming smarter.
       </p>
 
       <blockquote>
-        Intelligence itself is becoming cheaper to access.
+        Intelligence itself is becoming
+        cheaper to access.
       </blockquote>
 
       <p>
@@ -276,11 +893,13 @@
     </article>
 
 
-    <!-- AGENTS -->
+    <!-- 07 -->
 
     <article>
 
-      <p class="section-label">07 — AGENTS</p>
+      <p class="section-label">
+        07 — AGENTS
+      </p>
 
       <h2>
         From thinking to doing.
@@ -319,11 +938,13 @@
     </article>
 
 
-    <!-- NEXT BOTTLENECK -->
+    <!-- 08 -->
 
     <article>
 
-      <p class="section-label">08 — THE NEXT BOTTLENECK</p>
+      <p class="section-label">
+        08 — THE NEXT BOTTLENECK
+      </p>
 
       <h2>
         Optimization of optimization.
@@ -351,38 +972,58 @@
 
       <div class="questions">
 
-        <p>Which agent should do what?</p>
-        <p>When should it act?</p>
-        <p>Which agents should work together?</p>
-        <p>When should humans intervene?</p>
-        <p>How do we measure the outcome?</p>
+        <p>
+          Which agent should do what?
+        </p>
+
+        <p>
+          When should it act?
+        </p>
+
+        <p>
+          Which agents should work together?
+        </p>
+
+        <p>
+          When should humans intervene?
+        </p>
+
+        <p>
+          How do we measure the outcome?
+        </p>
 
       </div>
 
     </article>
 
 
-    <!-- RESPONSIBILITY -->
+    <!-- 09 -->
 
     <article>
 
-      <p class="section-label">09 — RESPONSIBILITY</p>
+      <p class="section-label">
+        09 — RESPONSIBILITY
+      </p>
 
       <h2>
-        Maybe the next scarce resource is responsibility.
+        Maybe the next scarce resource
+        is responsibility.
       </h2>
 
       <p>
-        Imagine a world where software, research,
-        marketing, design and execution become extremely cheap.
+        Imagine a world where software,
+        research, marketing, design and execution
+        become extremely cheap.
       </p>
 
       <p>
-        Simply doing something may no longer be particularly valuable.
+        Simply doing something may no longer
+        be particularly valuable.
       </p>
 
       <blockquote>
-        Who is responsible for making sure it actually works?
+        Who is responsible for making
+        sure it actually works?
       </blockquote>
 
       <p>
@@ -398,17 +1039,20 @@
       </p>
 
       <blockquote>
-        Can you reliably produce the desired outcome?
+        Can you reliably produce
+        the desired outcome?
       </blockquote>
 
     </article>
 
 
-    <!-- OUTCOMES -->
+    <!-- 10 -->
 
     <article>
 
-      <p class="section-label">10 — OUTCOMES</p>
+      <p class="section-label">
+        10 — OUTCOMES
+      </p>
 
       <h2>
         People don't buy technology.
@@ -429,18 +1073,21 @@
       </p>
 
       <blockquote>
-        Technology is the mechanism.<br />
+        Technology is the mechanism.
+        <br>
         The outcome is the value.
       </blockquote>
 
     </article>
 
 
-    <!-- HUMANS -->
+    <!-- 11 -->
 
     <article>
 
-      <p class="section-label">11 — HUMANS</p>
+      <p class="section-label">
+        11 — HUMANS
+      </p>
 
       <h2>
         What happens to human work?
@@ -448,7 +1095,8 @@
 
       <p>
         When automobiles became widespread,
-        the number of horses used for transportation declined.
+        the number of horses used for transportation
+        declined.
       </p>
 
       <p>
@@ -456,8 +1104,8 @@
       </p>
 
       <p>
-        Robots may eventually change physical work
-        in a similar way.
+        Robots may eventually change physical
+        work in a similar way.
       </p>
 
       <p>
@@ -473,11 +1121,13 @@
     </article>
 
 
-    <!-- WEALTH -->
+    <!-- 12 -->
 
     <article>
 
-      <p class="section-label">12 — WEALTH</p>
+      <p class="section-label">
+        12 — WEALTH
+      </p>
 
       <h2>
         So why do people pay you?
@@ -489,12 +1139,14 @@
 
       <p>
         But there is often a gap between
-        what they want and their ability to obtain it.
+        what they want and their ability
+        to obtain it.
       </p>
 
       <p>
         That gap creates an opportunity.
       </p>
+
 
       <div class="equation">
 
@@ -514,35 +1166,39 @@
 
       </div>
 
+
       <p>
-        Someone wants software but doesn't know how to build it.
-        You build it.
+        Someone wants software but doesn't know
+        how to build it. You build it.
       </p>
 
       <p>
-        Someone wants an agent but doesn't know how to create it.
-        You create it.
+        Someone wants an agent but doesn't know
+        how to create it. You create it.
       </p>
 
       <p>
-        Someone wants something listed somewhere but doesn't know
-        how to get it there.
+        Someone wants something listed somewhere
+        but doesn't know how to get it there.
         You solve the problem.
       </p>
 
       <blockquote>
-        Sell what people want,<br />
+        Sell what people want,
+        <br>
         but don't know how to get.
       </blockquote>
 
     </article>
 
 
-    <!-- DEMOCRATIZATION -->
+    <!-- 13 -->
 
     <article>
 
-      <p class="section-label">13 — DEMOCRATIZATION</p>
+      <p class="section-label">
+        13 — DEMOCRATIZATION
+      </p>
 
       <h2>
         Optimization has a second side.
@@ -575,41 +1231,49 @@
     </article>
 
 
-    <!-- FRAMEWORK -->
+    <!-- 14 -->
 
     <article>
 
-      <p class="section-label">14 — THE FRAMEWORK</p>
+      <p class="section-label">
+        14 — THE FRAMEWORK
+      </p>
 
       <h2>
         If you want to think about the future,
         ask five questions.
       </h2>
 
+
       <ol class="framework">
 
         <li>
           <span>01</span>
+
           What is currently expensive?
         </li>
 
         <li>
           <span>02</span>
+
           What happens if it becomes 100× cheaper?
         </li>
 
         <li>
           <span>03</span>
+
           Who gains access?
         </li>
 
         <li>
           <span>04</span>
+
           What new things become possible?
         </li>
 
         <li>
           <span>05</span>
+
           What becomes the next bottleneck?
         </li>
 
@@ -618,11 +1282,13 @@
     </article>
 
 
-    <!-- FINAL -->
+    <!-- 15 -->
 
     <article class="final">
 
-      <p class="section-label">15 — THE 1% GUESS</p>
+      <p class="section-label">
+        15 — THE 1% GUESS
+      </p>
 
       <h2>
         Don't try to predict everything.
@@ -633,675 +1299,149 @@
         I would look for technologies that do two things.
       </p>
 
+
       <div class="final-points">
 
         <div>
+
           <span>01</span>
-          <p>Optimize an existing capability.</p>
+
+          <p>
+            Optimize an existing capability.
+          </p>
+
         </div>
 
+
         <div>
+
           <span>02</span>
+
           <p>
-            Democratize a capability that is currently expensive
-            or difficult to access.
+            Democratize a capability that is
+            currently expensive or difficult to access.
           </p>
+
         </div>
 
       </div>
+
 
       <p>
         Then look one step further.
       </p>
 
       <blockquote>
-        Every successful optimization creates a new bottleneck.
+        Every successful optimization creates
+        a new bottleneck.
       </blockquote>
 
+
       <h2 class="last-line">
+
         What is becoming cheap?
-        <br /><br />
+
+        <br><br>
+
         What will become scarce because of it?
+
       </h2>
 
     </article>
 
+
   </main>
 
 
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
-    <span>Optimization / 2026</span>
+    Optimization / 2026
 
   </footer>
 
-  <script src="script.js"></script>
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    /*
+     * Reading progress
+     */
+
+    const progress =
+      document.getElementById("progress");
+
+    window.addEventListener(
+      "scroll",
+      () => {
+
+        const scrollTop =
+          window.scrollY;
+
+        const documentHeight =
+          document.documentElement.scrollHeight -
+          window.innerHeight;
+
+        const percentage =
+          (scrollTop / documentHeight) * 100;
+
+        progress.style.width =
+          percentage + "%";
+
+      }
+    );
+
+
+    /*
+     * Reveal articles while scrolling
+     */
+
+    const articles =
+      document.querySelectorAll("article");
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach(
+            (entry) => {
+
+              if (
+                entry.isIntersecting
+              ) {
+
+                entry.target.classList.add(
+                  "visible"
+                );
+
+              }
+
+            }
+          );
+
+        },
+        {
+          threshold: 0.05
+        }
+      );
+
+
+    articles.forEach(
+      (article) => {
+
+        observer.observe(article);
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
-```
-
-### `style.css`
-
-```css
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --background: #fafafa;
-  --text: #111;
-  --muted: #777;
-  --light: #e7e7e7;
-  --accent: #b8d900;
-
-  --content-width: 720px;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--background);
-  color: var(--text);
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  line-height: 1.7;
-}
-
-
-/* =========================
-   PROGRESS
-========================= */
-
-.progress {
-  position: fixed;
-
-  top: 0;
-  left: 0;
-
-  height: 2px;
-  width: 0;
-
-  background: var(--text);
-
-  z-index: 100;
-}
-
-
-/* =========================
-   NAV
-========================= */
-
-.nav {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 28px 40px;
-
-  font-size: 12px;
-}
-
-.logo {
-  color: var(--text);
-
-  text-decoration: none;
-
-  font-weight: 700;
-
-  font-size: 18px;
-}
-
-.nav-label {
-  color: var(--muted);
-
-  letter-spacing: 0.08em;
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-  min-height: 100vh;
-
-  max-width: 1100px;
-
-  margin: auto;
-
-  padding:
-    180px 40px
-    100px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-}
-
-.eyebrow {
-  color: var(--muted);
-
-  font-size: 12px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 0.15em;
-
-  margin-bottom: 35px;
-}
-
-.hero h1 {
-  font-size: clamp(
-    64px,
-    11vw,
-    150px
-  );
-
-  line-height: 0.9;
-
-  letter-spacing: -0.07em;
-
-  font-weight: 700;
-}
-
-.hero h1 em {
-  color: var(--muted);
-
-  font-style: normal;
-}
-
-.hero-description {
-  max-width: 500px;
-
-  margin-top: 45px;
-
-  color: var(--muted);
-
-  font-size: 18px;
-
-  line-height: 1.6;
-}
-
-.scroll {
-  margin-top: 100px;
-
-  color: var(--muted);
-
-  font-size: 20px;
-}
-
-
-/* =========================
-   CONTENT
-========================= */
-
-main {
-  max-width: var(--content-width);
-
-  margin: auto;
-
-  padding:
-    0 25px
-    100px;
-}
-
-article {
-  margin-bottom: 180px;
-}
-
-.section-label {
-  color: var(--muted);
-
-  font-size: 11px;
-
-  letter-spacing: 0.15em;
-
-  margin-bottom: 25px;
-
-  text-transform: uppercase;
-}
-
-h2 {
-  font-size: clamp(
-    38px,
-    6vw,
-    64px
-  );
-
-  line-height: 1.05;
-
-  letter-spacing: -0.055em;
-
-  margin-bottom: 40px;
-}
-
-p {
-  color: #444;
-
-  font-size: 18px;
-
-  margin-bottom: 25px;
-}
-
-strong {
-  color: var(--text);
-}
-
-
-/* =========================
-   QUOTES
-========================= */
-
-blockquote {
-  margin: 55px 0;
-
-  padding-left: 25px;
-
-  border-left: 2px solid var(--text);
-
-  font-size: 28px;
-
-  line-height: 1.3;
-
-  letter-spacing: -0.03em;
-
-  color: var(--text);
-}
-
-
-/* =========================
-   TIMELINE
-========================= */
-
-.timeline {
-  border-top: 1px solid var(--light);
-
-  margin:
-    60px 0
-    50px;
-}
-
-.timeline div {
-  display: grid;
-
-  grid-template-columns:
-    45px
-    1fr
-    120px;
-
-  align-items: center;
-
-  padding: 18px 0;
-
-  border-bottom:
-    1px solid var(--light);
-}
-
-.timeline span {
-  color: var(--muted);
-
-  font-size: 12px;
-}
-
-.timeline strong {
-  font-size: 18px;
-}
-
-.timeline small {
-  color: var(--muted);
-
-  font-size: 13px;
-
-  text-align: right;
-}
-
-
-/* =========================
-   SIMPLE LIST
-========================= */
-
-.simple-list {
-  margin: 50px 0;
-}
-
-.simple-list p {
-  font-size: 30px;
-
-  color: var(--text);
-
-  margin-bottom: 4px;
-
-  letter-spacing: -0.03em;
-}
-
-
-/* =========================
-   QUESTIONS
-========================= */
-
-.questions {
-  margin-top: 50px;
-}
-
-.questions p {
-  padding: 20px 0;
-
-  margin: 0;
-
-  border-bottom:
-    1px solid var(--light);
-
-  color: var(--text);
-}
-
-
-/* =========================
-   EQUATION
-========================= */
-
-.equation {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 15px;
-
-  margin: 60px 0;
-
-  padding: 25px 0;
-
-  border-top:
-    1px solid var(--light);
-
-  border-bottom:
-    1px solid var(--light);
-
-  overflow-x: auto;
-}
-
-.equation span {
-  white-space: nowrap;
-
-  font-size: 16px;
-}
-
-.equation b {
-  color: var(--muted);
-
-  font-weight: normal;
-}
-
-
-/* =========================
-   FRAMEWORK
-========================= */
-
-.framework {
-  list-style: none;
-
-  margin-top: 60px;
-}
-
-.framework li {
-  display: grid;
-
-  grid-template-columns: 50px 1fr;
-
-  gap: 10px;
-
-  padding: 25px 0;
-
-  border-bottom:
-    1px solid var(--light);
-
-  font-size: 20px;
-
-  line-height: 1.4;
-}
-
-.framework span {
-  color: var(--muted);
-
-  font-size: 12px;
-
-  padding-top: 5px;
-}
-
-
-/* =========================
-   FINAL
-========================= */
-
-.final-points {
-  margin: 60px 0;
-}
-
-.final-points div {
-  display: grid;
-
-  grid-template-columns: 50px 1fr;
-
-  gap: 10px;
-
-  padding: 25px 0;
-
-  border-bottom:
-    1px solid var(--light);
-}
-
-.final-points span {
-  color: var(--muted);
-
-  font-size: 12px;
-}
-
-.final-points p {
-  margin: 0;
-
-  color: var(--text);
-
-  font-size: 21px;
-}
-
-.last-line {
-  margin-top: 120px;
-
-  font-size:
-    clamp(
-      42px,
-      7vw,
-      75px
-    );
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-  border-top:
-    1px solid var(--light);
-
-  padding:
-    30px 40px;
-
-  color: var(--muted);
-
-  font-size: 11px;
-
-  letter-spacing: 0.08em;
-
-  text-align: center;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-  .nav {
-    padding: 22px;
-  }
-
-  .hero {
-    padding:
-      150px 22px
-      70px;
-  }
-
-  .hero-description {
-    font-size: 16px;
-  }
-
-  main {
-    padding:
-      0 22px
-      70px;
-  }
-
-  article {
-    margin-bottom: 120px;
-  }
-
-  p {
-    font-size: 17px;
-  }
-
-  blockquote {
-    font-size: 24px;
-
-    margin:
-      40px 0;
-  }
-
-  .timeline div {
-    grid-template-columns:
-      35px
-      1fr
-      80px;
-  }
-
-  .timeline strong {
-    font-size: 16px;
-  }
-
-  .timeline small {
-    font-size: 11px;
-  }
-
-  .equation {
-    justify-content: flex-start;
-
-    font-size: 14px;
-  }
-}
-```
-
-### `script.js`
-
-```javascript
-/*
-  Reading progress
-*/
-
-const progress = document.querySelector(".progress");
-
-window.addEventListener("scroll", () => {
-
-  const scrollTop = window.scrollY;
-
-  const documentHeight =
-    document.documentElement.scrollHeight -
-    window.innerHeight;
-
-  const percentage =
-    (scrollTop / documentHeight) * 100;
-
-  progress.style.width =
-    `${percentage}%`;
-
-});
-
-
-/*
-  Small reveal animation
-*/
-
-const articles =
-  document.querySelectorAll("article");
-
-const observer =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add("visible");
-
-        }
-
-      });
-
-    },
-    {
-      threshold: 0.05
-    }
-  );
-
-
-articles.forEach(article => {
-
-  article.style.opacity = "0";
-
-  article.style.transform =
-    "translateY(20px)";
-
-  article.style.transition =
-    "opacity 0.7s ease, transform 0.7s ease";
-
-  observer.observe(article);
-
-});
-
-
-/*
-  Add visible class styles dynamically
-*/
-
-const style =
-  document.createElement("style");
-
-style.textContent = `
-  article.visible {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-  }
-`;
-
-document.head.appendChild(style);
 ```
