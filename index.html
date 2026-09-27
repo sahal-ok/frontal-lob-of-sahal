@@ -1,3 +1,5 @@
+### `index.html`
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -9,769 +11,257 @@
 
   <meta
     name="description"
-    content="A thought experiment about economic revolutions, optimization, democratization, AI, agents and the next bottleneck."
+    content="A thought experiment about optimization, democratization, AI, agents and the next bottleneck."
   />
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #0a0a0a;
-      --surface: #111111;
-      --surface-2: #171717;
-      --text: #f4f4f0;
-      --muted: #9a9a94;
-      --line: #292929;
-      --accent: #d7ff4f;
-      --accent-dark: #9bbd18;
-      --max-width: 900px;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-      line-height: 1.75;
-    }
-
-    /* =========================
-       PROGRESS BAR
-    ========================== */
-
-    .progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 3px;
-      width: 0%;
-      background: var(--accent);
-      z-index: 1000;
-    }
-
-    /* =========================
-       NAVIGATION
-    ========================== */
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5vw;
-      background: rgba(10, 10, 10, 0.82);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      z-index: 999;
-    }
-
-    .logo {
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      font-size: 18px;
-    }
-
-    .nav-link {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--text);
-    }
-
-    /* =========================
-       HERO
-    ========================== */
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 140px 24px 100px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(
-        circle,
-        rgba(215,255,79,0.08),
-        transparent 65%
-      );
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 1050px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .eyebrow {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 30px;
-    }
-
-    .hero h1 {
-      font-size: clamp(60px, 11vw, 150px);
-      line-height: 0.88;
-      letter-spacing: -0.075em;
-      font-weight: 800;
-      margin-bottom: 40px;
-    }
-
-    .hero h1 span {
-      color: var(--accent);
-    }
-
-    .hero-description {
-      max-width: 650px;
-      margin: auto;
-      color: var(--muted);
-      font-size: clamp(18px, 2vw, 22px);
-      line-height: 1.6;
-    }
-
-    .scroll-indicator {
-      margin-top: 80px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      animation: float 2s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(8px);
-      }
-    }
-
-    /* =========================
-       ARTICLE
-    ========================== */
-
-    main {
-      max-width: var(--max-width);
-      margin: auto;
-      padding: 0 24px 120px;
-    }
-
-    section {
-      margin-bottom: 140px;
-    }
-
-    .section-number {
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      margin-bottom: 18px;
-    }
-
-    h2 {
-      font-size: clamp(38px, 6vw, 70px);
-      line-height: 1.02;
-      letter-spacing: -0.055em;
-      margin-bottom: 30px;
-    }
-
-    h3 {
-      font-size: 28px;
-      line-height: 1.2;
-      margin: 55px 0 18px;
-      letter-spacing: -0.03em;
-    }
-
-    p {
-      color: #c9c9c3;
-      font-size: 18px;
-      margin-bottom: 25px;
-    }
-
-    strong {
-      color: var(--text);
-    }
-
-    blockquote {
-      border-left: 3px solid var(--accent);
-      padding: 10px 0 10px 30px;
-      margin: 45px 0;
-      font-size: clamp(24px, 4vw, 38px);
-      line-height: 1.25;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    /* =========================
-       REVOLUTION CARDS
-    ========================== */
-
-    .revolutions {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-      margin: 50px 0;
-    }
-
-    .revolution {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      padding: 22px 15px;
-      cursor: pointer;
-      transition:
-        transform 0.25s,
-        border-color 0.25s,
-        background 0.25s;
-    }
-
-    .revolution:hover,
-    .revolution.active {
-      transform: translateY(-5px);
-      border-color: var(--accent);
-      background: var(--surface-2);
-    }
-
-    .revolution-number {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 20px;
-    }
-
-    .revolution h4 {
-      font-size: 17px;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .revolution p {
-      font-size: 13px;
-      line-height: 1.4;
-      margin: 0;
-      color: var(--muted);
-    }
-
-    /* =========================
-       INFO BOX
-    ========================== */
-
-    .info-box {
-      padding: 35px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      margin: 50px 0;
-    }
-
-    .info-box .label {
-      color: var(--accent);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .info-box p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* =========================
-       OPTIMIZATION FLOW
-    ========================== */
-
-    .flow {
-      margin: 60px 0;
-    }
-
-    .flow-item {
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 25px;
-      padding: 30px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .flow-number {
-      font-size: 14px;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .flow-content h4 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .flow-content p {
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .arrow {
-      color: var(--muted);
-      margin: 10px 0;
-      text-align: center;
-      font-size: 24px;
-    }
-
-    /* =========================
-       BIG STATEMENT
-    ========================== */
-
-    .big-statement {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 20px;
-      margin: 100px -24px;
-      background:
-        radial-gradient(
-          circle at center,
-          rgba(215,255,79,0.08),
-          transparent 55%
-        );
-    }
-
-    .big-statement h2 {
-      max-width: 850px;
-      margin: 0;
-    }
-
-    .big-statement span {
-      color: var(--accent);
-    }
-
-    /* =========================
-       QUESTION CARDS
-    ========================== */
-
-    .questions {
-      display: grid;
-      gap: 12px;
-      margin-top: 50px;
-    }
-
-    .question {
-      padding: 25px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      transition: border-color 0.2s;
-    }
-
-    .question:hover {
-      border-color: #555;
-    }
-
-    .question-number {
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .question-text {
-      font-size: 21px;
-    }
-
-    /* =========================
-       FUTURE BOX
-    ========================== */
-
-    .future-box {
-      background: var(--accent);
-      color: #090909;
-      padding: 50px;
-      margin-top: 60px;
-    }
-
-    .future-box h3 {
-      margin-top: 0;
-      font-size: 35px;
-    }
-
-    .future-box p {
-      color: #181818;
-    }
-
-    .future-box strong {
-      color: #000;
-    }
-
-    /* =========================
-       FOOTER
-    ========================== */
-
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 50px 24px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================== */
-
-    @media (max-width: 800px) {
-      .revolutions {
-        grid-template-columns: 1fr;
-      }
-
-      .revolution {
-        display: grid;
-        grid-template-columns: 40px 1fr;
-        gap: 10px;
-      }
-
-      .revolution-number {
-        margin: 0;
-      }
-
-      .flow-item {
-        grid-template-columns: 60px 1fr;
-      }
-
-      .info-box,
-      .future-box {
-        padding: 25px;
-      }
-
-      section {
-        margin-bottom: 100px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <div class="progress" id="progress"></div>
+  <!-- Reading progress -->
+  <div class="progress"></div>
 
-  <nav>
-    <div class="logo">OPTIMIZATION.</div>
-    <a href="#article" class="nav-link">Read essay ↓</a>
-  </nav>
+  <!-- Navigation -->
+  <header class="nav">
+    <a href="#" class="logo">S.</a>
 
-  <!-- HERO -->
-
-  <header class="hero">
-    <div class="hero-inner">
-
-      <div class="eyebrow">
-        A thought experiment about the future
-      </div>
-
-      <h1>
-        The Next<br />
-        <span>Revolution</span>
-      </h1>
-
-      <p class="hero-description">
-        What if every major economic revolution is really the same story?
-        We optimize one capability, make it cheaper and more accessible,
-        and then discover a new bottleneck.
-      </p>
-
-      <div class="scroll-indicator">
-        Scroll to explore
-      </div>
-
-    </div>
+    <span class="nav-label">
+      Essay / 2026
+    </span>
   </header>
 
 
-  <main id="article">
+  <!-- Hero -->
+  <section class="hero">
+
+    <p class="eyebrow">
+      A thought experiment
+    </p>
+
+    <h1>
+      The next<br />
+      revolution is<br />
+      <em>optimization.</em>
+    </h1>
+
+    <p class="hero-description">
+      What if every major economic revolution is simply
+      humanity making another capability cheaper?
+    </p>
+
+    <div class="scroll">
+      ↓
+    </div>
+
+  </section>
+
+
+  <main>
 
     <!-- INTRO -->
 
-    <section>
+    <article>
 
-      <div class="section-number">00 — THE QUESTION</div>
+      <p class="section-label">01</p>
 
       <h2>
-        What connects the revolutions?
+        Predicting the future is hard.
       </h2>
 
       <p>
-        Predicting the future is extremely difficult.
+        If anyone could consistently predict the future,
+        they would probably become a trillionaire.
       </p>
 
       <p>
-        If someone could consistently predict what would happen next,
-        they would probably become one of the richest people in history.
+        Even the best investors and technology companies
+        make decisions that look completely different
+        in hindsight.
       </p>
 
       <p>
-        So instead of asking exactly what the future will look like,
-        let's ask a different question:
+        So perhaps the better question isn't:
+      </p>
+
+      <blockquote>
+        What will happen?
+      </blockquote>
+
+      <p>
+        Instead:
       </p>
 
       <blockquote>
         What is humanity continuously trying to optimize?
       </blockquote>
 
-      <p>
-        And more importantly:
-      </p>
-
-      <blockquote>
-        What becomes the next bottleneck after that optimization succeeds?
-      </blockquote>
-
-    </section>
+    </article>
 
 
     <!-- REVOLUTIONS -->
 
-    <section>
+    <article>
 
-      <div class="section-number">01 — THE PATTERN</div>
+      <p class="section-label">02</p>
 
       <h2>
-        Agriculture → Industry → Internet → AI → Agents
+        One pattern keeps appearing.
       </h2>
 
-      <p>
-        Maybe these aren't completely separate revolutions.
-      </p>
+      <div class="timeline">
 
-      <p>
-        Maybe they are different stages of the same process:
-        <strong>making previously expensive capabilities cheap and accessible.</strong>
-      </p>
-
-      <div class="revolutions">
-
-        <div class="revolution active">
-          <div class="revolution-number">01</div>
-          <div>
-            <h4>Agriculture</h4>
-            <p>Optimize food production.</p>
-          </div>
+        <div>
+          <span>01</span>
+          <strong>Agriculture</strong>
+          <small>Food</small>
         </div>
 
-        <div class="revolution">
-          <div class="revolution-number">02</div>
-          <div>
-            <h4>Industry</h4>
-            <p>Optimize physical power.</p>
-          </div>
+        <div>
+          <span>02</span>
+          <strong>Industry</strong>
+          <small>Muscle</small>
         </div>
 
-        <div class="revolution">
-          <div class="revolution-number">03</div>
-          <div>
-            <h4>Internet</h4>
-            <p>Optimize access to knowledge.</p>
-          </div>
+        <div>
+          <span>03</span>
+          <strong>Internet</strong>
+          <small>Knowledge</small>
         </div>
 
-        <div class="revolution">
-          <div class="revolution-number">04</div>
-          <div>
-            <h4>AI</h4>
-            <p>Optimize cognitive capability.</p>
-          </div>
+        <div>
+          <span>04</span>
+          <strong>AI</strong>
+          <small>Intelligence</small>
         </div>
 
-        <div class="revolution">
-          <div class="revolution-number">05</div>
-          <div>
-            <h4>Agents</h4>
-            <p>Optimize autonomous execution.</p>
-          </div>
+        <div>
+          <span>05</span>
+          <strong>Agents</strong>
+          <small>Execution</small>
         </div>
 
       </div>
 
-    </section>
+      <p>
+        Each revolution seems to make a previously expensive
+        capability dramatically cheaper and more accessible.
+      </p>
+
+    </article>
 
 
     <!-- AGRICULTURE -->
 
-    <section>
+    <article>
 
-      <div class="section-number">02 — AGRICULTURE</div>
+      <p class="section-label">03 — AGRICULTURE</p>
 
       <h2>
-        Cheap food changed the world.
+        We optimized food.
       </h2>
 
       <p>
-        Humans learned how to systematically produce food instead of
-        depending entirely on hunting and gathering.
+        Humans learned to produce food systematically.
+        Better crops, seeds, irrigation, fertilizers and
+        farming techniques increased output.
       </p>
 
       <p>
-        Better crops, seeds, irrigation, fertilizers, domestication and
-        agricultural techniques dramatically increased the amount of food
-        that could be produced.
+        We optimized agriculture.
       </p>
 
-      <div class="info-box">
+      <p>
+        But optimization exposed another constraint:
+      </p>
 
-        <div class="label">Optimization</div>
+      <blockquote>
+        Human physical labor.
+      </blockquote>
 
-        <p>
-          Agriculture optimized the production of food per unit of human effort.
-        </p>
-
-        <p>
-          But optimization exposed another constraint:
-          <strong>human physical labor.</strong>
-        </p>
-
-      </div>
-
-    </section>
+    </article>
 
 
     <!-- INDUSTRY -->
 
-    <section>
+    <article>
 
-      <div class="section-number">03 — INDUSTRY</div>
+      <p class="section-label">04 — INDUSTRY</p>
 
       <h2>
-        Cheap muscle.
+        We optimized muscle.
       </h2>
 
       <p>
-        The Industrial Revolution attacked the physical bottleneck.
+        Machines multiplied what one human could physically accomplish.
       </p>
 
       <p>
-        Steam engines, factories, electricity, vehicles and machines
-        allowed humans to multiply their physical capability.
+        Steam engines. Factories. Electricity.
+        Cars. Industrial machinery.
+      </p>
+
+      <p>
+        Physical production became cheaper and more scalable.
       </p>
 
       <blockquote>
-        Instead of asking how many humans we need, we could ask how powerful
-        a machine we could put behind the task.
+        But then we needed knowledge.
       </blockquote>
 
-      <p>
-        Physical production became dramatically cheaper and more scalable.
-      </p>
-
-      <div class="info-box">
-
-        <div class="label">The new bottleneck</div>
-
-        <p>
-          We could produce things.
-          But increasingly complex systems required something else:
-          <strong>knowledge.</strong>
-        </p>
-
-      </div>
-
-    </section>
+    </article>
 
 
     <!-- INTERNET -->
 
-    <section>
+    <article>
 
-      <div class="section-number">04 — INTERNET</div>
+      <p class="section-label">05 — INTERNET</p>
 
       <h2>
-        Cheap access to knowledge.
+        We optimized access to knowledge.
       </h2>
 
       <p>
-        The Internet dramatically reduced the cost of accessing information.
+        The Internet made information accessible to almost anyone
+        with a connection.
       </p>
 
       <p>
-        A person sitting in a small town could suddenly access books,
-        research, lectures, documentation, experts and communities from
-        around the world.
+        Books, research, documentation, lectures and experts
+        became available from almost anywhere.
       </p>
 
       <p>
-        Knowledge became dramatically more accessible.
+        Knowledge became cheap to access.
       </p>
 
       <blockquote>
-        The Internet didn't just connect computers.
-        It democratized access to knowledge.
+        But access to knowledge isn't the same as knowing what to do with it.
       </blockquote>
 
-      <p>
-        But access to information is not the same as the ability to use it.
-      </p>
-
-      <p>
-        The bottleneck moved again.
-      </p>
-
-      <strong>
-        From access to knowledge → to the ability to understand and apply it.
-      </strong>
-
-    </section>
+    </article>
 
 
     <!-- AI -->
 
-    <section>
+    <article>
 
-      <div class="section-number">05 — AI</div>
+      <p class="section-label">06 — AI</p>
 
       <h2>
-        Cheap intelligence.
+        We are optimizing intelligence.
       </h2>
 
       <p>
-        AI may represent another reduction in the cost of capability.
+        AI can increasingly reason over information,
+        write code, analyze data, generate ideas and
+        perform cognitive tasks.
       </p>
 
       <p>
-        The Internet gave people access to enormous amounts of information.
-        AI increasingly gives people systems that can reason over that
-        information, generate ideas, write code, analyze data and perform
-        cognitive tasks.
+        The important change may not simply be that
+        AI is becoming smarter.
       </p>
 
       <blockquote>
@@ -779,117 +269,76 @@
       </blockquote>
 
       <p>
-        But once intelligence becomes cheap, another question appears:
+        And once intelligence becomes cheap,
+        another bottleneck appears.
       </p>
 
-      <p>
-        <strong>
-          What happens when thinking becomes cheaper than executing?
-        </strong>
-      </p>
-
-    </section>
+    </article>
 
 
     <!-- AGENTS -->
 
-    <section>
+    <article>
 
-      <div class="section-number">06 — AGENTS</div>
+      <p class="section-label">07 — AGENTS</p>
 
       <h2>
-        From intelligence to action.
+        From thinking to doing.
       </h2>
 
       <p>
-        Thinking isn't the same as doing.
+        AI can tell you what to do.
       </p>
 
       <p>
-        An AI can tell you how to find customers.
-        An agent can attempt to actually find them.
+        Agents attempt to actually do it.
       </p>
 
-      <div class="flow">
+      <div class="simple-list">
 
-        <div class="flow-item">
-          <div class="flow-number">01</div>
-          <div class="flow-content">
-            <h4>Research</h4>
-            <p>Find potential customers.</p>
-          </div>
-        </div>
-
-        <div class="flow-item">
-          <div class="flow-number">02</div>
-          <div class="flow-content">
-            <h4>Generate</h4>
-            <p>Create personalized messages.</p>
-          </div>
-        </div>
-
-        <div class="flow-item">
-          <div class="flow-number">03</div>
-          <div class="flow-content">
-            <h4>Execute</h4>
-            <p>Send messages and perform actions.</p>
-          </div>
-        </div>
-
-        <div class="flow-item">
-          <div class="flow-number">04</div>
-          <div class="flow-content">
-            <h4>Measure</h4>
-            <p>Track responses and results.</p>
-          </div>
-        </div>
-
-        <div class="flow-item">
-          <div class="flow-number">05</div>
-          <div class="flow-content">
-            <h4>Improve</h4>
-            <p>Change the strategy based on the outcome.</p>
-          </div>
-        </div>
+        <p>Research.</p>
+        <p>Decide.</p>
+        <p>Execute.</p>
+        <p>Measure.</p>
+        <p>Improve.</p>
 
       </div>
 
       <p>
-        Now imagine 100 agents.
+        One agent is useful.
       </p>
 
       <p>
-        Or 10,000.
-      </p>
-
-      <p>
-        At that scale, the problem isn't simply intelligence anymore.
+        What happens when there are thousands?
       </p>
 
       <blockquote>
         The problem becomes coordination.
       </blockquote>
 
-    </section>
+    </article>
 
 
-    <!-- OPTIMIZATION OF AGENTS -->
+    <!-- NEXT BOTTLENECK -->
 
-    <section>
+    <article>
 
-      <div class="section-number">07 — THE NEXT BOTTLENECK</div>
+      <p class="section-label">08 — THE NEXT BOTTLENECK</p>
 
       <h2>
         Optimization of optimization.
       </h2>
 
       <p>
-        Imagine a company with 100,000 AI agents.
+        Imagine a company with 100,000 agents.
       </p>
 
       <p>
-        Some research. Some code. Some sell. Some negotiate.
-        Some monitor machines. Some analyze customers.
+        Some research.
+        Some code.
+        Some sell.
+        Some negotiate.
+        Some monitor machines.
       </p>
 
       <p>
@@ -897,98 +346,51 @@
       </p>
 
       <p>
-        You need a system that decides:
+        You need systems that decide:
       </p>
 
       <div class="questions">
 
-        <div class="question">
-          <div class="question-number">01</div>
-          <div class="question-text">
-            Which agent should perform which task?
-          </div>
-        </div>
-
-        <div class="question">
-          <div class="question-number">02</div>
-          <div class="question-text">
-            When should it act?
-          </div>
-        </div>
-
-        <div class="question">
-          <div class="question-number">03</div>
-          <div class="question-text">
-            Which agents should work together?
-          </div>
-        </div>
-
-        <div class="question">
-          <div class="question-number">04</div>
-          <div class="question-text">
-            When should a human intervene?
-          </div>
-        </div>
-
-        <div class="question">
-          <div class="question-number">05</div>
-          <div class="question-text">
-            How do we measure whether an agent actually created value?
-          </div>
-        </div>
+        <p>Which agent should do what?</p>
+        <p>When should it act?</p>
+        <p>Which agents should work together?</p>
+        <p>When should humans intervene?</p>
+        <p>How do we measure the outcome?</p>
 
       </div>
 
-    </section>
+    </article>
 
 
     <!-- RESPONSIBILITY -->
 
-    <section>
+    <article>
 
-      <div class="section-number">08 — RESPONSIBILITY</div>
+      <p class="section-label">09 — RESPONSIBILITY</p>
 
       <h2>
-        The next scarcity may be responsibility.
+        Maybe the next scarce resource is responsibility.
       </h2>
 
       <p>
-        Imagine a world where creating things becomes extremely cheap.
+        Imagine a world where software, research,
+        marketing, design and execution become extremely cheap.
       </p>
 
       <p>
-        Software becomes cheap.
-        Research becomes cheap.
-        Marketing becomes cheap.
-        Design becomes cheap.
-        Agents become cheap.
-      </p>
-
-      <p>
-        Then simply <strong>doing something</strong> may no longer be the
-        scarce capability.
+        Simply doing something may no longer be particularly valuable.
       </p>
 
       <blockquote>
-        Who is responsible for making sure the thing actually works?
+        Who is responsible for making sure it actually works?
       </blockquote>
-
-      <p>
-        An AI might be able to build a website.
-        Another might create advertisements.
-        Another might contact customers.
-      </p>
-
-      <p>
-        But who is responsible when the business fails?
-      </p>
 
       <p>
         The question changes from:
       </p>
 
       <blockquote>
-        "Can you perform the task?"
+        Can you perform the task?
       </blockquote>
 
       <p>
@@ -996,178 +398,121 @@
       </p>
 
       <blockquote>
-        "Can you reliably produce the desired outcome?"
+        Can you reliably produce the desired outcome?
       </blockquote>
 
-    </section>
+    </article>
 
 
     <!-- OUTCOMES -->
 
-    <section>
+    <article>
 
-      <div class="section-number">09 — OUTCOMES</div>
+      <p class="section-label">10 — OUTCOMES</p>
 
       <h2>
         People don't buy technology.
-        They buy outcomes.
       </h2>
 
       <p>
-        Imagine two people.
+        They buy outcomes.
       </p>
 
       <p>
-        Person A says:
+        Someone doesn't necessarily want software.
+        They want the problem solved by the software.
+      </p>
+
+      <p>
+        They don't necessarily want an AI agent.
+        They want what the agent accomplishes.
       </p>
 
       <blockquote>
-        "I built an AI agent."
+        Technology is the mechanism.<br />
+        The outcome is the value.
       </blockquote>
 
-      <p>
-        Person B says:
-      </p>
-
-      <blockquote>
-        "I increased this company's sales using AI agents."
-      </blockquote>
-
-      <p>
-        These are very different economic propositions.
-      </p>
-
-      <p>
-        The first sells capability.
-      </p>
-
-      <p>
-        The second sells an outcome.
-      </p>
-
-      <div class="future-box">
-
-        <h3>
-          Technology is the mechanism.
-        </h3>
-
-        <p>
-          The outcome is what matters.
-        </p>
-
-        <p>
-          As capabilities become cheaper,
-          <strong>reliably producing outcomes may become more valuable.</strong>
-        </p>
-
-      </div>
-
-    </section>
+    </article>
 
 
     <!-- HUMANS -->
 
-    <section>
+    <article>
 
-      <div class="section-number">10 — HUMANS</div>
+      <p class="section-label">11 — HUMANS</p>
 
       <h2>
         What happens to human work?
       </h2>
 
       <p>
-        When automobiles became widespread, the number of horses used for
-        transportation declined dramatically.
+        When automobiles became widespread,
+        the number of horses used for transportation declined.
       </p>
 
       <p>
-        We didn't simply replace horses with another kind of horse.
+        The transportation system changed.
       </p>
 
       <p>
-        The entire transportation system changed.
+        Robots may eventually change physical work
+        in a similar way.
       </p>
-
-      <p>
-        The same question can be asked about robots:
-      </p>
-
-      <blockquote>
-        If robots can perform physical work, why would humans need to perform
-        that work?
-      </blockquote>
 
       <p>
         Some jobs may disappear.
         Some may shrink.
-        Others may change completely.
-      </p>
-
-      <p>
-        But technological revolutions also create new environments,
-        and new environments create new problems.
-      </p>
-
-    </section>
-
-
-    <!-- FRONTIER -->
-
-    <section>
-
-      <div class="section-number">11 — THE NEW FRONTIER</div>
-
-      <h2>
-        The frontier keeps moving.
-      </h2>
-
-      <p>
-        If robots eventually perform most ordinary physical work,
-        humanity may move toward problems that are currently inaccessible.
-      </p>
-
-      <p>
-        Space exploration.
-        Scientific discovery.
-        New engineering.
-        New technologies.
-        New environments.
-        Problems that don't exist yet.
-      </p>
-
-      <p>
-        These are examples, not predictions.
+        Some may completely change.
       </p>
 
       <blockquote>
-        When one frontier becomes cheap, humans tend to move toward another.
+        The frontier keeps moving.
       </blockquote>
 
-    </section>
+    </article>
 
 
     <!-- WEALTH -->
 
-    <section>
+    <article>
 
-      <div class="section-number">12 — WEALTH CREATION</div>
+      <p class="section-label">12 — WEALTH</p>
 
       <h2>
-        Why do people pay you?
+        So why do people pay you?
       </h2>
 
       <p>
-        Perhaps the simplest answer is:
+        People have wants.
       </p>
-
-      <blockquote>
-        People have wants, but there is a gap between what they want and
-        their ability to obtain it.
-      </blockquote>
 
       <p>
-        That gap is where businesses exist.
+        But there is often a gap between
+        what they want and their ability to obtain it.
       </p>
+
+      <p>
+        That gap creates an opportunity.
+      </p>
+
+      <div class="equation">
+
+        <span>Want</span>
+
+        <b>→</b>
+
+        <span>Gap</span>
+
+        <b>→</b>
+
+        <span>Solution</span>
+
+        <b>→</b>
+
+        <span>Value</span>
+
+      </div>
 
       <p>
         Someone wants software but doesn't know how to build it.
@@ -1175,331 +520,788 @@
       </p>
 
       <p>
-        Someone wants an AI agent but doesn't know how to create or deploy it.
-        You build it.
+        Someone wants an agent but doesn't know how to create it.
+        You create it.
       </p>
 
       <p>
-        Someone wants something listed on Google Maps but doesn't know how
-        to get it there.
+        Someone wants something listed somewhere but doesn't know
+        how to get it there.
         You solve the problem.
       </p>
 
-      <div class="future-box">
+      <blockquote>
+        Sell what people want,<br />
+        but don't know how to get.
+      </blockquote>
 
-        <h3>
-          Find the gap.
-        </h3>
-
-        <p>
-          Find something people want but don't know how to obtain,
-          and build the bridge between the two.
-        </p>
-
-      </div>
-
-    </section>
+    </article>
 
 
     <!-- DEMOCRATIZATION -->
 
-    <section>
+    <article>
 
-      <div class="section-number">13 — DEMOCRATIZATION</div>
+      <p class="section-label">13 — DEMOCRATIZATION</p>
 
       <h2>
-        Optimization isn't the whole story.
+        Optimization has a second side.
       </h2>
 
       <p>
-        There is another recurring pattern:
-      </p>
-
-      <blockquote>
         Democratization.
-      </blockquote>
-
-      <p>
-        Agriculture democratized the ability to produce food.
       </p>
 
       <p>
-        Industry democratized access to mechanical power.
+        Agriculture made food production scalable.
       </p>
 
       <p>
-        The Internet democratized access to information.
+        Industry made mechanical power accessible.
       </p>
 
       <p>
-        AI is democratizing access to cognitive capability.
+        The Internet made information accessible.
       </p>
 
       <p>
-        Agents may democratize autonomous execution.
+        AI is making cognitive capability accessible.
       </p>
 
       <p>
-        Whatever comes next may democratize something we currently consider
-        expensive, specialized or difficult.
+        Agents may make autonomous execution accessible.
       </p>
 
-    </section>
+    </article>
 
 
     <!-- FRAMEWORK -->
 
-    <section>
+    <article>
 
-      <div class="section-number">14 — THE FRAMEWORK</div>
+      <p class="section-label">14 — THE FRAMEWORK</p>
 
       <h2>
-        How to think about the future.
+        If you want to think about the future,
+        ask five questions.
       </h2>
 
-      <div class="questions">
+      <ol class="framework">
 
-        <div class="question">
-          <div class="question-number">01</div>
-          <div class="question-text">
-            What is currently expensive?
-          </div>
-        </div>
+        <li>
+          <span>01</span>
+          What is currently expensive?
+        </li>
 
-        <div class="question">
-          <div class="question-number">02</div>
-          <div class="question-text">
-            What would happen if it became 100× cheaper?
-          </div>
-        </div>
+        <li>
+          <span>02</span>
+          What happens if it becomes 100× cheaper?
+        </li>
 
-        <div class="question">
-          <div class="question-number">03</div>
-          <div class="question-text">
-            Who would gain access?
-          </div>
-        </div>
+        <li>
+          <span>03</span>
+          Who gains access?
+        </li>
 
-        <div class="question">
-          <div class="question-number">04</div>
-          <div class="question-text">
-            What new things would people do with that capability?
-          </div>
-        </div>
+        <li>
+          <span>04</span>
+          What new things become possible?
+        </li>
 
-        <div class="question">
-          <div class="question-number">05</div>
-          <div class="question-text">
-            What bottleneck would appear after that?
-          </div>
-        </div>
+        <li>
+          <span>05</span>
+          What becomes the next bottleneck?
+        </li>
 
-      </div>
+      </ol>
 
-    </section>
+    </article>
 
 
     <!-- FINAL -->
 
-    <section class="big-statement">
+    <article class="final">
+
+      <p class="section-label">15 — THE 1% GUESS</p>
 
       <h2>
-        Don't ask what the future will be.
-        <br /><br />
-        Ask:
-        <br />
-        <span>What is becoming cheap?</span>
-        <br /><br />
-        And:
-        <br />
-        <span>What will become scarce because of it?</span>
-      </h2>
-
-    </section>
-
-
-    <!-- END -->
-
-    <section>
-
-      <div class="section-number">15 — THE 1% GUESS</div>
-
-      <h2>
-        A tiny bet on the future.
+        Don't try to predict everything.
       </h2>
 
       <p>
-        This framework cannot tell us exactly what the future will look like.
+        If I had to make a tiny bet about the future,
+        I would look for technologies that do two things.
       </p>
 
-      <p>
-        The future is too complex for that.
-      </p>
+      <div class="final-points">
 
-      <p>
-        But if I had to make a tiny bet—not a prediction, just a
-        <strong>1% probability guess</strong>—I would look for technologies
-        that do one of two things:
-      </p>
+        <div>
+          <span>01</span>
+          <p>Optimize an existing capability.</p>
+        </div>
 
-      <div class="info-box">
-
-        <div class="label">01</div>
-
-        <p>
-          <strong>Optimize an existing capability.</strong>
-        </p>
-
-      </div>
-
-      <div class="info-box">
-
-        <div class="label">02</div>
-
-        <p>
-          <strong>
-            Democratize a capability that is currently expensive or difficult
-            to access.
-          </strong>
-        </p>
+        <div>
+          <span>02</span>
+          <p>
+            Democratize a capability that is currently expensive
+            or difficult to access.
+          </p>
+        </div>
 
       </div>
 
       <p>
-        And then I would look one step further.
+        Then look one step further.
       </p>
 
       <blockquote>
         Every successful optimization creates a new bottleneck.
       </blockquote>
 
-      <p>
-        Maybe the future belongs less to the people who can predict exactly
-        what happens next...
-      </p>
-
-      <p>
-        ...and more to the people who can recognize the next bottleneck
-        when it appears.
-      </p>
-
-      <blockquote>
-        The future may not be about predicting the next revolution.
+      <h2 class="last-line">
+        What is becoming cheap?
         <br /><br />
-        It may be about finding the next thing that needs optimization.
-      </blockquote>
+        What will become scarce because of it?
+      </h2>
 
-    </section>
+    </article>
 
   </main>
 
 
   <footer>
-    <p>
-      A thought experiment about optimization, democratization and the next bottleneck.
-    </p>
+
+    <span>Optimization / 2026</span>
+
   </footer>
 
-
-  <script>
-
-    /* =========================
-       READING PROGRESS
-    ========================== */
-
-    const progress = document.getElementById("progress");
-
-    window.addEventListener("scroll", () => {
-
-      const scrollTop = window.scrollY;
-
-      const documentHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-      const percentage =
-        (scrollTop / documentHeight) * 100;
-
-      progress.style.width = percentage + "%";
-
-    });
-
-
-    /* =========================
-       REVOLUTION CARD INTERACTION
-    ========================== */
-
-    const cards = document.querySelectorAll(".revolution");
-
-    cards.forEach(card => {
-
-      card.addEventListener("click", () => {
-
-        cards.forEach(item => {
-          item.classList.remove("active");
-        });
-
-        card.classList.add("active");
-
-      });
-
-    });
-
-
-    /* =========================
-       REVEAL ON SCROLL
-    ========================== */
-
-    const sections = document.querySelectorAll("section");
-
-    const observer = new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.08
-      }
-    );
-
-
-    sections.forEach(section => {
-
-      section.style.opacity = "0";
-      section.style.transform = "translateY(25px)";
-      section.style.transition =
-        "opacity 0.8s ease, transform 0.8s ease";
-
-      observer.observe(section);
-
-    });
-
-
-    /* =========================
-       KEYBOARD SHORTCUT
-    ========================== */
-
-    document.addEventListener("keydown", event => {
-
-      if (event.key.toLowerCase() === "h") {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      }
-
-    });
-
-  </script>
+  <script src="script.js"></script>
 
 </body>
 </html>
+```
+
+### `style.css`
+
+```css
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background: #fafafa;
+  --text: #111;
+  --muted: #777;
+  --light: #e7e7e7;
+  --accent: #b8d900;
+
+  --content-width: 720px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  line-height: 1.7;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  height: 2px;
+  width: 0;
+
+  background: var(--text);
+
+  z-index: 100;
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.nav {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 28px 40px;
+
+  font-size: 12px;
+}
+
+.logo {
+  color: var(--text);
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  font-size: 18px;
+}
+
+.nav-label {
+  color: var(--muted);
+
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  min-height: 100vh;
+
+  max-width: 1100px;
+
+  margin: auto;
+
+  padding:
+    180px 40px
+    100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.eyebrow {
+  color: var(--muted);
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.15em;
+
+  margin-bottom: 35px;
+}
+
+.hero h1 {
+  font-size: clamp(
+    64px,
+    11vw,
+    150px
+  );
+
+  line-height: 0.9;
+
+  letter-spacing: -0.07em;
+
+  font-weight: 700;
+}
+
+.hero h1 em {
+  color: var(--muted);
+
+  font-style: normal;
+}
+
+.hero-description {
+  max-width: 500px;
+
+  margin-top: 45px;
+
+  color: var(--muted);
+
+  font-size: 18px;
+
+  line-height: 1.6;
+}
+
+.scroll {
+  margin-top: 100px;
+
+  color: var(--muted);
+
+  font-size: 20px;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+main {
+  max-width: var(--content-width);
+
+  margin: auto;
+
+  padding:
+    0 25px
+    100px;
+}
+
+article {
+  margin-bottom: 180px;
+}
+
+.section-label {
+  color: var(--muted);
+
+  font-size: 11px;
+
+  letter-spacing: 0.15em;
+
+  margin-bottom: 25px;
+
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(
+    38px,
+    6vw,
+    64px
+  );
+
+  line-height: 1.05;
+
+  letter-spacing: -0.055em;
+
+  margin-bottom: 40px;
+}
+
+p {
+  color: #444;
+
+  font-size: 18px;
+
+  margin-bottom: 25px;
+}
+
+strong {
+  color: var(--text);
+}
+
+
+/* =========================
+   QUOTES
+========================= */
+
+blockquote {
+  margin: 55px 0;
+
+  padding-left: 25px;
+
+  border-left: 2px solid var(--text);
+
+  font-size: 28px;
+
+  line-height: 1.3;
+
+  letter-spacing: -0.03em;
+
+  color: var(--text);
+}
+
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline {
+  border-top: 1px solid var(--light);
+
+  margin:
+    60px 0
+    50px;
+}
+
+.timeline div {
+  display: grid;
+
+  grid-template-columns:
+    45px
+    1fr
+    120px;
+
+  align-items: center;
+
+  padding: 18px 0;
+
+  border-bottom:
+    1px solid var(--light);
+}
+
+.timeline span {
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.timeline strong {
+  font-size: 18px;
+}
+
+.timeline small {
+  color: var(--muted);
+
+  font-size: 13px;
+
+  text-align: right;
+}
+
+
+/* =========================
+   SIMPLE LIST
+========================= */
+
+.simple-list {
+  margin: 50px 0;
+}
+
+.simple-list p {
+  font-size: 30px;
+
+  color: var(--text);
+
+  margin-bottom: 4px;
+
+  letter-spacing: -0.03em;
+}
+
+
+/* =========================
+   QUESTIONS
+========================= */
+
+.questions {
+  margin-top: 50px;
+}
+
+.questions p {
+  padding: 20px 0;
+
+  margin: 0;
+
+  border-bottom:
+    1px solid var(--light);
+
+  color: var(--text);
+}
+
+
+/* =========================
+   EQUATION
+========================= */
+
+.equation {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin: 60px 0;
+
+  padding: 25px 0;
+
+  border-top:
+    1px solid var(--light);
+
+  border-bottom:
+    1px solid var(--light);
+
+  overflow-x: auto;
+}
+
+.equation span {
+  white-space: nowrap;
+
+  font-size: 16px;
+}
+
+.equation b {
+  color: var(--muted);
+
+  font-weight: normal;
+}
+
+
+/* =========================
+   FRAMEWORK
+========================= */
+
+.framework {
+  list-style: none;
+
+  margin-top: 60px;
+}
+
+.framework li {
+  display: grid;
+
+  grid-template-columns: 50px 1fr;
+
+  gap: 10px;
+
+  padding: 25px 0;
+
+  border-bottom:
+    1px solid var(--light);
+
+  font-size: 20px;
+
+  line-height: 1.4;
+}
+
+.framework span {
+  color: var(--muted);
+
+  font-size: 12px;
+
+  padding-top: 5px;
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+.final-points {
+  margin: 60px 0;
+}
+
+.final-points div {
+  display: grid;
+
+  grid-template-columns: 50px 1fr;
+
+  gap: 10px;
+
+  padding: 25px 0;
+
+  border-bottom:
+    1px solid var(--light);
+}
+
+.final-points span {
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.final-points p {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 21px;
+}
+
+.last-line {
+  margin-top: 120px;
+
+  font-size:
+    clamp(
+      42px,
+      7vw,
+      75px
+    );
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  border-top:
+    1px solid var(--light);
+
+  padding:
+    30px 40px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  letter-spacing: 0.08em;
+
+  text-align: center;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .nav {
+    padding: 22px;
+  }
+
+  .hero {
+    padding:
+      150px 22px
+      70px;
+  }
+
+  .hero-description {
+    font-size: 16px;
+  }
+
+  main {
+    padding:
+      0 22px
+      70px;
+  }
+
+  article {
+    margin-bottom: 120px;
+  }
+
+  p {
+    font-size: 17px;
+  }
+
+  blockquote {
+    font-size: 24px;
+
+    margin:
+      40px 0;
+  }
+
+  .timeline div {
+    grid-template-columns:
+      35px
+      1fr
+      80px;
+  }
+
+  .timeline strong {
+    font-size: 16px;
+  }
+
+  .timeline small {
+    font-size: 11px;
+  }
+
+  .equation {
+    justify-content: flex-start;
+
+    font-size: 14px;
+  }
+}
+```
+
+### `script.js`
+
+```javascript
+/*
+  Reading progress
+*/
+
+const progress = document.querySelector(".progress");
+
+window.addEventListener("scroll", () => {
+
+  const scrollTop = window.scrollY;
+
+  const documentHeight =
+    document.documentElement.scrollHeight -
+    window.innerHeight;
+
+  const percentage =
+    (scrollTop / documentHeight) * 100;
+
+  progress.style.width =
+    `${percentage}%`;
+
+});
+
+
+/*
+  Small reveal animation
+*/
+
+const articles =
+  document.querySelectorAll("article");
+
+const observer =
+  new IntersectionObserver(
+    entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add("visible");
+
+        }
+
+      });
+
+    },
+    {
+      threshold: 0.05
+    }
+  );
+
+
+articles.forEach(article => {
+
+  article.style.opacity = "0";
+
+  article.style.transform =
+    "translateY(20px)";
+
+  article.style.transition =
+    "opacity 0.7s ease, transform 0.7s ease";
+
+  observer.observe(article);
+
+});
+
+
+/*
+  Add visible class styles dynamically
+*/
+
+const style =
+  document.createElement("style");
+
+style.textContent = `
+  article.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+`;
+
+document.head.appendChild(style);
 ```
